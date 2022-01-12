@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} upload{% endblock%}
+{% block stylesheets %}
+    <link rel="stylesheet" href="../../../css/style.css">
+{% endblock %}
+{% block body %}
+    {% block header %}
+    {% endblock %}
+
+    {{ form_start(form,{attr:{'c':'c'}}) }}
+    {{ form_row(form.upload_file) }}
+    {{ form_end(form) }}
+
+
+{%  endblock %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

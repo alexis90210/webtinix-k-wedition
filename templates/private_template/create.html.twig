@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./img/logo-kword.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/tailwind.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <title>K-WORLD</title>
+</head>
+<body class="flex flex-col overflow-x-hidden">
+    <div class="w-full h-screen absolute flex items-center justify-center p-2" style="background: rgba(0, 0, 0, .5);">
+        <div class="w-full max-w-6xl px-8 py-12 kw-bg-yellow-trans shadow-xl rounded-xl" style="padding-top: 100px;">
+            <h2 class="font-medium text-2xl md:text-4xl text-white text-center pb-2">Ajouter un manga</h2>
+
+            {# pass a string argument to get only the messages of that type #}
+            {% for message in app.flashes('success') %}
+                <p class="py-3 text-white text-center text-lg" style="color:red">
+                    {{ message }}
+                </p>
+            {% endfor %}
+            <div class="w-full flex space-x-4">
+                <div class="p-2 md:flex-1 w-1/3">
+                    <p class="py-3 text-white text-lg">Informations sur le manga</p>
+                    {{ form_start(form ,{ attr :{'class':'flex flex-col space-y-5'}}) }}
+                      <div class="flex flex-col space-y-1 text-white">
+                          {{ form_label(form.titre_manga) }}
+                          {{ form_widget(form.titre_manga,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                      </div>
+                      <div class="flex flex-col space-y-1 text-white">
+                          {{ form_label(form.auteur) }}
+                          {{ form_widget(form.auteur,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                      </div>
+
+                    <div class="flex flex-col space-y-1 text-white">
+                        {{ form_label(form.decouverte) }}
+                        {{ form_widget(form.decouverte,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                    </div>
+
+                        <div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.genre) }}
+                            {{ form_widget(form.genre,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                        </div>
+
+                      <div class="flex flex-col space-y-1 text-white">
+                          {{ form_label(form.status_manga) }}
+                          {{ form_widget(form.status_manga,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                    </div>
+                    <div class="flex flex-col space-y-1 text-white">
+                        {{ form_label(form.profile_manga) }}
+                        {{ form_widget(form.profile_manga,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+
+                    </div>
+
+                    <div class="flex flex-col space-y-1 text-white">
+                        {{ form_label(form.manga_cover) }}
+                        {{ form_widget(form.manga_cover,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+
+                    </div>
+
+                </div>
+
+                <div class="p-2 md:flex-1 w-1/3">
+                    <p class="py-3 text-white text-lg">Informations sur le chapitre</p>
+                    <div class="flex flex-col space-y-5">
+                        {#<div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.chap_cover) }}
+                            {{ form_widget(form.chap_cover,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+
+                        </div>#}
+                      <div class="flex flex-col space-y-1 text-white">
+                          {{ form_label(form.titre_chapitre) }}
+                          {{ form_widget(form.titre_chapitre,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                      </div>
+                      <div class="flex flex-col space-y-1 text-white">
+                          {{ form_label(form.numero_chapitre) }}
+                          {{ form_widget(form.numero_chapitre,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                      </div>
+                        <div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.image) }}
+                            {{ form_widget(form.image,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                        </div>
+                        <div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.date_fin) }}
+                            {{ form_widget(form.date_fin,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                        </div>
+
+                        <div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+
+                        </div>
+
+                      <div class="flex flex-col space-y-1 text-white">
+                          {{ form_label(form.status_chapitre) }}
+                          {{ form_widget(form.status_chapitre,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+
+                    </div>
+                    </div>
+                </div>
+
+                <div class="p-2 md:flex-1 w-1/3">
+                    <p class="py-3 text-white text-lg">Ajouter un scan</p>
+                    <div class="flex flex-col space-y-5">
+
+                      <div class="flex flex-col space-y-1 text-white">
+                          {{ form_label(form.upload_scan) }}
+                          {{ form_widget(form.upload_scan,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+
+                      </div>
+                      <div>
+                          {{ form_widget(form.Enregistrer,{ 'attr': {'class':'w-full px-4 py-2 text-lg font-semibold text-white kw-bg-yellow rounded-md shadow transform hover:scale-105 transition-all duration-500 focus:outline-none'} }) }}
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</body>
+</html>

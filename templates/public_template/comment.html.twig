@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Commentaire {% endblock%}
+{% block stylesheets %}
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/tailwind.css">
+{% endblock %}
+{% block body %}
+    <main class="w-full pb-5 pt-28 md:pt-32" style="background: rgba(0, 0, 0, .5);">
+
+        <!-- Main section -->
+        <section class="px-2 md:px-6 max-w-6xl mx-auto relative flex flex-wrap">            
+            <div class="w-full p-1 flex flex-col space-y-3">
+
+                <!-- Head main -->
+                <div class="pb-3 flex flex-col space-y-4 items-center">
+                    <h2 class="font-medium text-lg md:text-4xl text-white uppercase">{{ chapitreInfo.titre_manga }} - chapitre {{ chapitreInfo.numero_chapitre }}</h2>
+                </div>
+
+                <div class="w-full h-full bg-black bg-opacity-50 border border-yellow-800 rounded-xl p-6 flex flex-wrap justify-center max-w-2xl mx-auto">
+                    <p class="text-center text-white">
+                        {{ chapitreInfo.description }}
+                    </p>
+
+                    <!-- Comment section -->
+                    <div class="w-full text-white pt-4">
+                        <div class="flex space-x-4 items-center">
+                            <h3 class="mb-4 text-lg font-semibold text-yellow-800">{{ totalCom}} Commentaires</h3>
+                            <a href="#commentForm" class="mb-4 bg-black bg-opacity-50 border border-black text-white px-2 py-1 rounded-md">Ajouter un commentaire</a>
+                        </div>
+                        
+                        <div class="space-y-4">
+                      
+                          {#<div class="flex">
+                            <div class="flex-shrink-0 mr-3">
+                              <img class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover" src="./img/anime-4.jpg" alt="">
+                            </div>
+                            <div class="flex-1 border border-yellow-800 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                              <strong>Saitama</strong> <span class="text-xs text-yellow-800">3:34 PM</span>
+                              <p class="text-sm">
+                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                                magna aliquyam erat, sed diam voluptua.
+                              </p>
+                              <div class="mt-4 flex items-center">
+                                <div class="flex -space-x-2 mr-2">
+                                  <img class="rounded-full w-6 h-6 border border-yellow-800 object-cover" src="./img/anime-2.jpg" alt="">
+                                  <img class="rounded-full w-6 h-6 border border-yellow-800 object-cover" src="./img/anime-3.jpg" alt="">
+                                </div>
+                                <div class="text-sm text-yellow-800 font-semibold">
+                                  5 Réponses
+                                </div>
+                              </div>
+                            </div>
+                          </div>#}
+                      {% if commentaires|length > 0 %}
+                            {% for commentaire in commentaires %}
+                          <div class="flex">
+                            <div class="flex-shrink-0 mr-3">
+                              <img class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover" src="../uploads/{{ commentaire.avatar }}" alt="">
+                            </div>
+                            <div class="flex-1 border border-yellow-800 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                              <strong>{{ commentaire.pseudo }}</strong> <span class="text-xs text-yellow-800">{{ commentaire.poste_at }}</span>  {% if (commentaire.user_id == app.session.get('member_logged_id')) %} - <a  href="supprime/{{ commentaire.id_com }}" class="text-xs text-yellow-800">supprimer</a>{% elseif (app.session.get('admin_role') == true)  %} - <a  href="supprime/{{ commentaire.id_com }}/" class="text-xs text-yellow-800">supprimer</a>{% endif %}
+                              <p class="text-sm">{{ commentaire.commentaire }}</p>
+                              
+                              <h4 class="my-5 uppercase tracking-wide text-yellow-800 font-bold text-xs">{#({{ commentaire.nbreReponse }})#} <a  href="reponse/{{ commentaire.chap_id }}-{{ commentaire.user_id }}-{{ commentaire.id_com }}" class="text-xs text-yellow-800">{{ commentaire.nbreReponse }} réponse(s)  - Repondre</a></h4>
+                               {# {% if commentaire.nbreReponse > 0 %}
+                              <div class="space-y-4">
+                                <div class="flex">
+                                  <div class="flex-shrink-0 mr-3">
+                                    <img class="mt-3 rounded-full w-6 h-6 sm:w-8 sm:h-8" src="../../img/anime-3.jpg" alt="">
+                                  </div>
+                                  <div class="flex-1 border border-yellow-800 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                                    <strong>Gojo</strong> <span class="text-xs text-yellow-800">3:34 PM</span>
+                                    <p class="text-xs sm:text-sm">
+                                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                                      magna aliquyam erat, sed diam voluptua.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                                {% endif %}#}
+                            </div>
+                          </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                        {% endif %}
+
+                    {% if (app.session.get('member_logged') == true ) or (app.session.get('admin_role') == true )%}
+                    <!-- Comment form -->
+                    <div id="commentForm" class="flex w-full items-center justify-center mt-6 mb-4">
+
+                        {# pass a string argument to get only the messages of that type #}
+                        {% for message in app.flashes('success') %}
+                            <p class="py-3 text-white text-center text-lg" style="color:red">
+                                {{ message }}
+                            </p>
+                        {% endfor %}
+                        {{ form_start(form,{attr:{'class':'w-full pt-2 text-white'}}) }}
+                          <div class="flex flex-wrap -mx-3">
+                            <div class="w-full md:w-full px-3 mb-2 mt-2">
+                                {{ form_widget(form.commentaire,{  }) }}
+                            </div>
+                            <div class="w-full md:w-full flex items-end px-3">
+                                <div class="-mr-1 self-end">
+                                    {{ form_widget(form.Commenter,{  }) }}
+                                </div>
+                            </div>
+                          </div>
+                        {{ form_end(form) }}
+                    </div>
+                    {% else %}
+                    <p style="color:red;">vous devez vous connecter pour commenter</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Scripts -->
+
+    <!-- Alpine.js -->
+   <script src="../js/alpine.js"></script>
+
+    <!-- JQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Custom script file -->
+    <script src="js/main.js"></script>
+    {% endblock %}

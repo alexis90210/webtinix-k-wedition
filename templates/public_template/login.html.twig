@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} login {% endblock%}
+
+{% block body %}
+    {% block header %}{% endblock %}
+    <div class="w-full h-screen absolute flex items-center justify-center p-2" style="background: rgba(0, 0, 0, .5);">
+        <div class="w-full max-w-xl px-4 py-12 kw-bg-yellow-trans shadow-xl rounded-xl">
+            <h2 class="font-medium text-2xl md:text-4xl text-white text-center pb-2">Connexion</h2>
+
+            <p class="py-3 text-white text-center text-lg">Utiliser le suivant formulaire pour vous connecter</p>
+
+            {% if confirmationSucccess|length > 0  %}
+                <p class="py-3 text-white text-center text-lg" style="color:green">
+                    {{ confirmationSucccess }}
+                </p>
+            {% endif %}
+
+            {# pass a string argument to get only the messages of that type #}
+            {% for message in app.flashes('success') %}
+                <p class="py-3 text-white text-center text-lg" style="color:red">
+                    {{ message }}
+                </p>
+            {% endfor %}
+            <div class="p-2 md:flex-1">
+                    {{ form_start(form,{attr:{'class':'flex flex-col space-y-5'}}) }}
+                    <div class="flex flex-col space-y-1 text-white">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email,{ 'attr': {
+                            'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200',
+
+                        } }) }}
+                    </div>
+                    <div class="flex flex-col space-y-1 text-white">
+                        {{ form_label(form.password) }}
+                        {{ form_widget(form.password,{ 'attr': {
+                            'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200',
+
+                        } }) }}
+                    </div>
+                    <div class="text-sm">
+                        <a href="{{ path('recuperation') }}" class="text-yellow-400 hover:text-yellow-500">
+                            Mot de passe oublie ?
+                        </a>
+                    </div>
+                    <div>
+                        {{ form_widget(form.Connexion, {'attr':{'class':'text-sm w-full px-4 py-2 text-lg font-semibold border text-white kw-bg-yellow rounded-md shadow transform hover:scale-105 transition-all duration-500 focus:outline-none'}}) }}
+                    </div>
+                {{ form_end(form) }}
+
+
+            </div>
+        </div>
+    </div>
+
+{%  endblock %}
+
+{%  block footer %}
+    {% block javascript %}
+    {% block javascripts %}
+
+        <!-- Scripts -->
+
+        <!-- Alpine.js -->
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script>
+            var cont=0;
+            function loopSlider(){
+                var xx = setInterval(function(){
+                    switch(cont)
+                    {
+                        case 0:{
+                            $("#slider-1").fadeOut(400);
+                            $("#slider-2").delay(400).fadeIn(400);
+
+                            $("#sButton1").removeClass("ring-white");
+                            $("#sButton2").addClass("ring-white");
+                            cont=1;
+
+                            break;
+                        }
+                        case 1:
+                        {
+
+                            $("#slider-2").fadeOut(400);
+                            $("#slider-1").delay(400).fadeIn(400);
+                            $("#sButton2").removeClass("ring-white");
+                            $("#sButton1").addClass("ring-white");
+
+                            cont=0;
+
+                            break;
+                        }
+                    }},5000);
+            }
+
+            function reinitLoop(time){
+                clearInterval(xx);
+                setTimeout(loopSlider(),time);
+            }
+
+            function sliderButton1(){
+                $("#slider-2").fadeOut(400);
+                $("#slider-1").delay(400).fadeIn(400);
+                $("#sButton2").removeClass("ring-white");
+                $("#sButton1").addClass("ring-white");
+
+                reinitLoop(4000);
+                cont=0
+            }
+
+            function sliderButton2(){
+                $("#slider-1").fadeOut(400);
+                $("#slider-2").delay(400).fadeIn(400);
+                $("#sButton1").removeClass("ring-white");
+                $("#sButton2").addClass("ring-white");
+
+                reinitLoop(4000);
+                cont=1
+            }
+
+            $(window).ready(function(){
+                $("#slider-2").hide();
+                $("#sButton1").addClass("ring-white");
+
+                loopSlider();
+            });
+        </script>
+
+        <!-- Custom script file -->
+        <script src="js/main.js"></script>
+    {% endblock %}
+    {% endblock %}
+
+{% endblock %}

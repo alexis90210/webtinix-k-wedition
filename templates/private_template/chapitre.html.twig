@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/logo-kword.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/tailwind.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <title>Admin K-WORLD</title>
+</head>
+<body class="flex flex-col overflow-x-hidden">
+<header class="fixed z-50 top-0 w-full flex flex-col text-sm font-medium">
+
+    <!-- Top nav -->
+    <div class="w-full bg-black">
+        <div id="topNav" class="flex justify-center items-center kw-bg-gray">
+                <span class="flex text-white text-2xl py-2">
+                    K-World site administrateur
+                </span>
+        </div>
+    </div>
+
+    <nav x-data="{ isOpen: false }" class="bg-white flex items-center justify-between h-16 border-b border-t kw-border-yellow text-gray-900">
+        <a href="{{ path('admin') }}" class="flex items-center">
+            <img src="../img/logo-kword.png" alt="" class="h-16 py-4 pr-2 pl-4 md:p-1">
+            <div class="flex flex-col">
+                <h2 class="kw-text-yellow md:text-xl font-bold">World</h2>
+                <h2 class="kw-text-yellow md:text-xl font-bold">Edition</h2>
+            </div>
+        </a>
+        <div class="hidden md:flex justify-between items-center h-16">
+            <div class="flex justify-end space-x-4 mr-4">
+                <a href="{{ path('gestion_membre') }}" class="border-b-2 border-transparent hover:border-yellow-800 transition-all duration-500 ease-in-out">Gestion Membre</a>
+                <a href="{{ path('modifie') }}" class="border-b-2 border-transparent hover:border-yellow-800 transition-all duration-500 ease-in-out">Gestion Manga</a>
+            </div>
+            <div class="flex items-center justify-between pl-12 pr-6 kw-bg-yellow h-full kw-clip-2 text-white">
+                <a href="{{ path('home') }}" class="border-b-2 border-transparent hover:border-white transition-all duration-500 ease-in-out">Voir le site</a>
+                <a href="#" class="border-b-2 border-transparent hover:white transition-all duration-500 ease-in-out">{% if app.session.get('admin_role') == true %}{{ app.session.get('admin_role_name') }}{% endif %}</a>
+                <a href="{{ path('deconnexion') }}" class="border-b-2 border-transparent hover:white transition-all duration-500 ease-in-out">Déconnexion</a>
+            </div>
+        </div>
+
+        <!-- Mobile menu button -->
+        <div @click="isOpen = !isOpen" class="flex md:hidden p-2 mx-2">
+            <button id="mobileBtn" type="button" class="text-yellow-800 hover:text-yellow-700 focus:outline-none focus:text-yellow-700"
+                    aria-label="toggle menu">
+                <svg fill="currentColor" viewBox="0 0 20 20" class="w-7 h-7">
+                    <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<main class="w-full pb-5 pt-28 md:pt-32" style="background: rgba(0, 0, 0, .5);">
+
+    <!-- Main section -->
+    <section class="px-2 md:px-6 my-6 mx-auto relative flex flex-wrap">
+        <div class="w-full p-1 flex flex-col">
+            <div class="pb-3 flex space-x-4 items-center w-full">
+                <h2 class="font-medium text-lg md:text-2xl text-white uppercase">Ajouter un chapitre</h2>
+            </div>
+
+            {# pass a string argument to get only the messages of that type #}
+            {% for message in app.flashes('success') %}
+                <p class="py-3 text-white text-center text-lg" style="color:red">
+                    {{ message }}
+                </p>
+            {% endfor %}
+
+            <div class="w-full flex space-x-4">
+                <div class="p-2 md:flex-1 w-1/3">
+                    <div class="flex flex-col">
+                        {{ form_start(form ,{ attr :{'class':'flex flex-col space-y-5'}}) }}
+                        <div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.titre_chapitre) }}
+                            {{ form_widget(form.titre_chapitre,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                        </div>
+                        <div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.image) }}
+                            {{ form_widget(form.image,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                        </div>
+                        <div class="flex flex-col space-y-1 text-white " >
+                            {{ form_label(form.numero_chapitre) }}
+                            {{ form_widget(form.numero_chapitre,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                        </div>
+
+                        <div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.date_fin) }}
+                            {{ form_widget(form.date_fin,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="p-2 md:flex-1 w-1/3">
+                    <div class="flex flex-col space-y-5">
+
+                        <div class="flex flex-col space-y-1 text-white"  style="padding-top: 50px;">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+                        </div>
+
+                        <div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.status_chapitre) }}
+                            {{ form_widget(form.status_chapitre,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+
+                        </div>
+
+                        <div class="flex flex-col space-y-1 text-white">
+                            {{ form_label(form.upload_scan) }}
+                            {{ form_widget(form.upload_scan,{ 'attr' : { 'class':'px-4 py-2 transition duration-300 border border-gray-300 bg-transparent rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200','row':'5' } }) }}
+
+                        </div>
+                        <div>
+                            {{ form_widget(form.Enregistrer,{ 'attr': {'class':'w-full px-4 py-2 text-lg font-semibold text-white kw-bg-yellow rounded-md shadow transform hover:scale-105 transition-all duration-500 focus:outline-none'} }) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+            <div class="w-full flex flex-col space-y-4 py-5 px-3 rounded-xl bg-white shadow-xl">
+                <table class="w-full border ">
+                    <thead>
+                    <tr class="bg-white border-b">
+                        <th class="border-r p-2">
+
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                ID
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Titre Chapitre
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Numero chapitre
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Status
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Action
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-white text-center">
+                        <td class="p-2 border-r">
+
+                        </td>
+                        <td class="p-2 border-r">
+                            <input type="text" class="border p-1">
+                        </td>
+                        <td class="p-2 border-r">
+                            <input type="text" class="border p-1">
+                        </td>
+                        <td class="p-2 border-r">
+                            <input type="text" class="border p-1">
+                        </td>
+                        <td class="p-2 border-r">
+                            <input type="text" class="border p-1">
+                        </td>
+                        <td class="p-2">
+                            <input type="text" class="border p-1">
+                        </td>
+                    </tr>
+                    {% if chapitres|length > 0 %}
+                        {% for m in chapitres %}
+                            <tr class="bgwhite text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">
+
+                                </td>
+                                <td class="p-2 border-r">{{ m.id }}</td>
+                                <td class="p-2 border-r">{{ m.TitreChapitre }}</td>
+                                <td class="p-2 border-r">{{ m.NumeroChapitre }}</td>
+                                <td class="p-2 border-r">{{ m.StatusChapitre }}</td>
+                                <td>
+                                    <a href="/edit-chapitre-{{ m.id }}" class="bg-blue-500 p-2 text-white hover:shadow-lg text-sm font-thin">Modifier</a>
+                                    <a href="/scan-{{ m.id }}-{{ idManga }}" class="bg-green-500 p-2 text-white hover:shadow-lg text-sm font-thin">Liste scan</a>
+                                    <a href="/supprime-scan-{{ m.id }}" class="bg-red-500 p-2 text-white hover:shadow-lg text-sm font-thin">supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer section -->
+<footer class="w-full bg-black bg-opacity-80 pt-5 relative bottom-0">
+    <div class="max-w-6xl mx-auto px-6"></div>
+    <div class="container mx-auto px-6">
+        <div class="mt-4 border-t border-gray-400 flex flex-col items-center">
+            <div class="sm:w-2/3 text-center py-3">
+                <p class="text-xs text-gray-400 font-bold mb-2">
+                    Copyright K-World Edition © 2020 by <a href="http://www.webtinix.com">Webtinix</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+
+<!-- Alpine.js -->
+<script src="js/alpine.js" defer></script>
+</body>
+</html>

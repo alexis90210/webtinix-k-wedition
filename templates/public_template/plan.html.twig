@@ -1,0 +1,269 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Plan {% endblock%}
+{% block body %}
+<main class="w-full pb-5 pt-28 md:pt-32" style="background: rgba(0, 0, 0, .5);">
+
+        <!-- Main section -->
+        <section class="px-2 md:px-6 max-w-6xl mx-auto relative flex flex-wrap"> 
+            
+            <!-- Planning -->
+            <div id="planning" class="w-full p-1 flex flex-col space-y-3">
+
+                <!-- Head main -->
+                <div class="pb-3 flex justify-center space-x-4 items-center">
+                    <h2 class="font-medium text-lg md:text-4xl text-white uppercase">A retrouver prochainement -</h2>
+                    <button onclick="showCalendar();" class="focus:outline-none text-white">
+                        <svg class="w-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24"><path d="M12,19a1,1,0,1,0-1-1A1,1,0,0,0,12,19Zm5,0a1,1,0,1,0-1-1A1,1,0,0,0,17,19Zm0-4a1,1,0,1,0-1-1A1,1,0,0,0,17,15Zm-5,0a1,1,0,1,0-1-1A1,1,0,0,0,12,15ZM19,3H18V2a1,1,0,0,0-2,0V3H8V2A1,1,0,0,0,6,2V3H5A3,3,0,0,0,2,6V20a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V6A3,3,0,0,0,19,3Zm1,17a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V11H20ZM20,9H4V6A1,1,0,0,1,5,5H6V6A1,1,0,0,0,8,6V5h8V6a1,1,0,0,0,2,0V5h1a1,1,0,0,1,1,1ZM7,15a1,1,0,1,0-1-1A1,1,0,0,0,7,15Zm0,4a1,1,0,1,0-1-1A1,1,0,0,0,7,19Z"/></svg>
+                    </button>
+                </div>
+
+                {% if mangas|length > 0 %}
+                <div class="w-full h-full rounded-xl p-4 flex flex-wrap justify-center kw-bg-yellow-trans text-white">
+                    {% for manga in mangas %}
+                        <div class="relative w-full md:w-60 h-44 m-2 md:border-0 rounded-xl transform hover:scale-105 duration-500 shadow-xl">
+                            <img src="./uploads/{{ manga.image }}" alt="" class="absolute rounded-xl w-full h-full object-cover">
+                            <div class="absolute rounded-xl w-full h-full kw-bg-gray-trans p-4 flex flex-col space-y-2 justify-center items-center">
+                                <h2 class="font-medium text-xl uppercase"><a href="/mangas/{{ manga.id_manga }}/chapitres">{{ manga.titre_manga }}</a></h2>
+                                <progress class="w-full" max="100" value="{{ manga.progres_chapitre }}"></progress>
+                                <p class="font-medium text-sm">Chapitre {{ manga.numero_chapitre }} en cours d'édition</p>
+                                <p class="font-medium text-sm">Fin du chapitre prevu le {{ manga.date_fin_chapitre }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Pagination -->
+                    {#<div class="container mx-auto px-4 py-2 pt-4">
+                        <nav class="flex flex-row flex-nowrap justify-between md:justify-center items-center font-medium" aria-label="Pagination">
+                            <a class="flex w-10 h-10 mr-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Previous Page">
+                                <span class="sr-only">Previous Page</span>
+                                <svg class="block w-4 h-4 fill-current" viewBox="0 0 256 512" aria-hidden="true" role="presentation">
+                                    <path d="M238.475 475.535l7.071-7.07c4.686-4.686 4.686-12.284 0-16.971L50.053 256 245.546 60.506c4.686-4.686 4.686-12.284 0-16.971l-7.071-7.07c-4.686-4.686-12.284-4.686-16.97 0L10.454 247.515c-4.686 4.686-4.686 12.284 0 16.971l211.051 211.05c4.686 4.686 12.284 4.686 16.97-.001z"></path>
+                                </svg>
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 1">
+                                1
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 2">
+                                2
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-black bg-black text-white pointer-events-none" href="#" aria-current="page" title="Page 3">
+                                3
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 4">
+                                ...
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 5">
+                                5
+                            </a>
+                            <a class="flex w-10 h-10 ml-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Next Page">
+                                <span class="sr-only">Next Page</span>
+                                <svg class="block w-4 h-4 fill-current" viewBox="0 0 256 512" aria-hidden="true" role="presentation">
+                                    <path d="M17.525 36.465l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L205.947 256 10.454 451.494c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l211.051-211.05c4.686-4.686 4.686-12.284 0-16.971L34.495 36.465c-4.686-4.687-12.284-4.687-16.97 0z"></path>
+                                </svg>
+                            </a>
+                        </nav>
+                    </div>#}
+                </div>
+            </div>
+
+            <!-- Calendar -->
+            <div id="calendar" class="hidden w-full p-1 flex-col space-y-3">
+
+                <!-- Head main -->
+                <div class="pb-3 flex justify-center space-x-4 items-center">
+                    <h2 class="font-medium text-lg md:text-4xl text-white uppercase">Calendrier de sortie <span class="lowercase text-lg">(mois en cours)</span> -</h2>
+                    <button onclick="showPlanning();" class="focus:outline-none text-white">
+                        <svg class="w-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.75,12a1,1,0,0,0-.55-.89L15.08,8.05v-4a3.08,3.08,0,1,0-6.16,0v4L2.8,11.11a1,1,0,0,0-.55.89v3.33a1,1,0,0,0,.43.83,1,1,0,0,0,.92.11l5.32-2V18l-1.82.6a1,1,0,0,0-.68.95V22a1,1,0,0,0,.3.71,1,1,0,0,0,.7.29h9.17a1,1,0,0,0,1-1V19.5a1,1,0,0,0-.68-.95L15.08,18V14.28l5.32,2a1,1,0,0,0,.92-.11,1,1,0,0,0,.43-.83Zm-7.31-.1a1,1,0,0,0-.93.11,1,1,0,0,0-.43.82v5.84a1,1,0,0,0,.69.95l1.81.6V21H8.41v-.78l1.81-.6a1,1,0,0,0,.69-.95V12.83a1,1,0,0,0-.43-.82,1,1,0,0,0-.93-.11l-5.31,2V12.62l6.11-3.06a1,1,0,0,0,.56-.89V4.08a1.08,1.08,0,1,1,2.16,0V8.67a1,1,0,0,0,.56.89l6.11,3.06v1.27Z"/></svg>
+                    </button>
+                </div>
+                <p class="w-full max-w-lg mx-auto font-medium text-center text-white kw-bg-yellow-trans py-1 px-4 rounded-full">Les dates prévues de sorties sont en jaune</p>
+
+                <!-- Month -->
+                <div class="kw-bg-gray-trans text-white w-full max-w-xl mx-auto my-3 border-solid rounded border shadow-sm">
+                    <div class="px-2 py-2 border-solid border-b text-center font-medium">{{ mois_annee }} </div>
+                    <div class="">
+                        <table class="w-full">
+
+                            <!-- Weeks -->
+                            <tr class="border-b">
+                                <th class="py-3 px-4">S</th>
+                                <th class="py-3 px-4">M</th>
+                                <th class="py-3 px-4">T</th>
+                                <th class="py-3 px-4">W</th>
+                                <th class="py-3 px-4">T</th>
+                                <th class="py-3 px-4">F</th>
+                                <th class="py-3 px-4">S</th>
+                            </tr>
+
+                            <!-- Week-1 -->
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    1
+                                </td>
+                            </tr>
+
+                            <!-- Week-2 -->
+                            <tr>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    2
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    3
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    4
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    5
+                                </td>
+                                <td x-data="{ isOpen: false }" @click="isOpen = !isOpen" class="py-2 px-2 text-center cursor-pointer kw-bg-yellow hover:bg-white hover:text-yellow-800 transition-colors duration-300 rounded-md">
+                                    6
+
+                                    <div x-show="isOpen" @click.away="isOpen = !isOpen" class="fixed top-32 right-10 w-56 h-56 p-4 text-white kw-bg-yellow-trans rounded-xl flex flex-col">
+                                        <h2 class="text-center text-xl">{{ date_complet }}</h2>
+                                        <p class="mt-2 text-center">
+                                            Shingeki No Kyojin ( Chapitre 120 )
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    7
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    8
+                                </td>
+                            </tr>
+
+                            <!-- Week-3 -->
+                            <tr>
+                                <td x-data="{ isOpen: false }" @click="isOpen = !isOpen" class="py-2 px-2 text-center cursor-pointer kw-bg-yellow hover:bg-white hover:text-yellow-800 transition-colors duration-300 rounded-md">
+                                    9
+
+                                    <div x-show="isOpen" @click.away="isOpen = !isOpen" class="fixed top-32 right-10 w-56 h-56 p-4 text-white kw-bg-yellow-trans rounded-xl flex flex-col">
+                                        <h2 class="text-center text-xl">9 Décembre 2018</h2>
+                                        <p class="mt-2 text-center">
+                                            Shingeki No Kyojin ( Chapitre 120 )
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    10
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    11
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    12
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    13
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    14
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    15
+                                </td>
+                            </tr>
+
+                            <!-- Week-4 -->
+                            <tr>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    16
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    17
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    18
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    19
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    20
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    21
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    22
+                                </td>
+                            </tr>
+
+                            <!-- Week-5 -->
+                            <tr>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    23
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    24
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    25
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    26
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    27
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    28
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    29
+                                </td>
+                            </tr>
+
+                            <!-- Week-6 -->
+                            <tr>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    30
+                                </td>
+                                <td class="py-2 px-2 text-center cursor-pointer">
+                                    31
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    {% block javascript %}
+    <script>
+        function showCalendar(){
+        $("#planning").fadeOut(400);
+        $("#calendar").delay(400).fadeIn(400);
+    }
+        function showPlanning(){
+        $("#calendar").fadeOut(400);
+        $("#planning").delay(400).fadeIn(400);
+    }
+    </script>
+    <!-- Alpine.js -->
+    <script src="../js/alpine.js"></script>
+
+    <!-- JQuery -->
+    <script src="../js/jquery.js"></script>
+    <!-- Custom script file -->
+    <script src="../js/main.js"></script>
+    {% endblock %}
+
+{%  endblock %}

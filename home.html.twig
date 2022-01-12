@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Acceuil {% endblock%}
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.css">
+            <link rel="stylesheet" type="text/css" href="../../css/main.css">
+
+        {% endblock %}
+{% block body %}
+    <div class="bg-dark p-5">
+        <center class="text-white md_size">HOME</center>
+    </div>
+
+    <div class="bg-light p-5 col-12">
+        <ol>
+            <li><a href="{{ path('connexion') }}">connexion</a></li>
+            <li><a href="{{ path('inscription') }}">Inscription</a></li>
+            <li><a href="{{ path('mangas') }}">mangas</a></li>
+        </ol>
+
+        {# pass a string argument to get only the messages of that type #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="">
+            {# for input bar #}
+
+            {{ form_start(form) }}
+            {{ form_row(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
+    {% if results|length > 0 %}
+    <div class="bg-success p-2 col-12">
+        <h3>Resultat de la recherche</h3>
+                <ul class="border text-white">
+                    <li>titre : {{ results.titre  }}</li>
+                    <li>publie le : {{ results.postAt  }}</li>
+                </ul>
+    </div><br>
+    {% endif %}
+
+
+    <div class="jumbotron">
+        <h3>list info culturelle</h3>
+        <div class="bg-white p-2 col-12">
+            {% if info_culturelle|length > 0 %}
+                {% for info in info_culturelle %}
+                    <ul class="border">
+                        <li>titre : {{ info.titre  }}</li>
+                        <li>descrip : {{ info.description  }}</li>
+                        <li>media : {{ info.media  }}</li>
+                        <li>publie le : {{ info.postAt  }}</li>
+                        <li>
+                            => actions :
+                            <a href="#">partager</a>
+                        </li>
+                    </ul>
+
+                {% endfor %}
+            {% else %}
+                <p>* liste est vide</p>
+            {% endif %}
+
+        </div><br>
+    </div>
+
+{% endblock%}
+
+  {% block javascripts %}
+      <script src="../../css/bootstrap/js/jquery-3.3.1.min.js"></script>
+      <script src="../../css/bootstrap/js/bootstrap.js"></script>
+
+  {% endblock %}

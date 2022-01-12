@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Confirmation {% endblock%}
+
+{% block body %}
+    {% block header %}{% endblock %}
+    <div class="w-full h-screen absolute flex items-center justify-center p-2" style="background: rgba(0, 0, 0, .5);">
+        <div class="w-full max-w-xl px-4 py-12 kw-bg-yellow-trans shadow-xl rounded-xl">
+            <h2 class="font-medium text-2xl md:text-4xl text-white text-center pb-2">Confirmation</h2>
+
+            <p class="py-3 text-white text-center text-lg">Utiliser le suivant formulaire pour vous inscrire</p>
+
+            <div class="p-2 md:flex-1">
+                <div class="flex flex-col space-y-5">
+
+                    <div class="bg-light p-5">
+                        <p class="alert alert-success">
+                            Bravo {{ pseudo }} ! <br>Votre compte a bien ete active ! <br>
+                            vous etes inscris comme :  {{ email }}
+                        </p>
+                        <a href="{{ path('connexion') }}">Se connecter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{%  endblock %}
+
+{%  block footer %}
+
+{% endblock %}

@@ -1,0 +1,83 @@
+body {
+    background: url(../img/background_k-word_2.png);
+    background-size:cover;
+    background-attachment: fixed;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+}
+.kw-headerButtons-p {
+    padding: 1px 10px;
+}
+.kw-clip {
+    clip-path: polygon(30px 0, 100% 0, 100% 100%, 0 100%);
+    width: 450px;
+}
+.kw-clip-2 {
+    clip-path: polygon(50px 0, 100% 0, 100% 100%, 0 100%);
+    width: 500px;
+}
+.kw-hero-clip {
+    background: rgba(0, 0, 0, 0.60);
+    margin: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .15);
+    border: 4px solid rgba(255, 255, 255, .1);
+}
+@media (min-width:600px) {
+    .kw-hero-clip {
+        clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(5px);
+        margin: auto;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, .15);
+        border: 4px solid rgba(255, 255, 255, .1);
+    }
+}
+.kw-bg-yellow {
+    background: #AB5523;
+}
+.kw-border-yellow {
+    border-color: #AB5523;
+}
+.kw-text-yellow {
+    color: #89451E;
+}
+.kw-bg-gray-trans {
+    background: rgba(112, 112, 112, 0.5);
+}
+.kw-bg-yellow-trans {
+    background: rgba(171, 85, 35, 0.1);
+}
+.kw-bg-yellow-trans-2 {
+    background: rgba(171, 85, 35, 0.5);
+}
+.kw-bg-gray {
+    background: #333;
+}
+
+/* on chrome */
+progress::-webkit-progress-value {
+    background: #AB5523;
+    height: 10px;
+    border-radius: 20px;
+}
+progress::-webkit-progress-bar {
+    background: lightgrey;
+    border-radius: 20px;
+    height: 10px;
+}
+
+/* on mozila */
+progress::-moz-progress-value {
+    background: #AB5523;
+    height: 10px;
+    border-radius: 20px;
+}
+progress::-moz-progress-bar {
+    background: lightgrey;
+    border-radius: 20px;
+    height: 10px;
+}
+.w-500 {
+    width: 500px;
+}

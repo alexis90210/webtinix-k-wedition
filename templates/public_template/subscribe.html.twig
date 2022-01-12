@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Subscribe {% endblock%}
+
+{% block body %}
+    {% block header %}{% endblock %}
+
+      {# pass a string argument to get only the messages of that type #}
+            {% for message in app.flashes('success') %}
+            <p class="py-3 text-white text-center text-lg" style="color:red">
+                {{ message }}
+            </p>
+            {% endfor %}
+    {{ form_start(form) }}
+   <div class="w-full h-screen absolute flex items-center justify-center p-2" style="background: rgba(0, 0, 0, .5);">
+        <div class="w-full max-w-xl px-4 py-12 kw-bg-yellow-trans shadow-xl rounded-xl">
+            <h2 class="font-medium text-2xl md:text-4xl text-white text-center pb-6">Souscrire à notre newsletter</h2>
+
+            <div class="">
+                <div class='flex justify-between max-w-md p-1 bg-transparent shadow border rounded-full overflow-hidden mx-auto'>
+
+                    {{ form_widget(form.email,{ 'attr': {
+                        'class':'focus:outline-none w-full bg-transparent md:w-96 pl-6 text-white',
+                        'placeholder':'john@doe.com'
+                    } }) }}
+                    {{ form_widget(form.Souscrire, {'attr':{'class':'flex-end kw-bg-yellow w-full md:w-64 text-white font-bold md:text-2xl md:px-8 py-3 outline-none rounded-full text-center uppercase focus:outline-none transform hover:scale-105 transition-all duration-500'}}) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{%  endblock %}
+
+{%  block footer %}
+    {% block javascript %}
+    {% block javascripts %}
+
+        <!-- Scripts -->
+
+        <!-- Alpine.js -->
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script>
+            var cont=0;
+            function loopSlider(){
+                var xx = setInterval(function(){
+                    switch(cont)
+                    {
+                        case 0:{
+                            $("#slider-1").fadeOut(400);
+                            $("#slider-2").delay(400).fadeIn(400);
+
+                            $("#sButton1").removeClass("ring-white");
+                            $("#sButton2").addClass("ring-white");
+                            cont=1;
+
+                            break;
+                        }
+                        case 1:
+                        {
+
+                            $("#slider-2").fadeOut(400);
+                            $("#slider-1").delay(400).fadeIn(400);
+                            $("#sButton2").removeClass("ring-white");
+                            $("#sButton1").addClass("ring-white");
+
+                            cont=0;
+
+                            break;
+                        }
+                    }},5000);
+            }
+
+            function reinitLoop(time){
+                clearInterval(xx);
+                setTimeout(loopSlider(),time);
+            }
+
+            function sliderButton1(){
+                $("#slider-2").fadeOut(400);
+                $("#slider-1").delay(400).fadeIn(400);
+                $("#sButton2").removeClass("ring-white");
+                $("#sButton1").addClass("ring-white");
+
+                reinitLoop(4000);
+                cont=0
+            }
+
+            function sliderButton2(){
+                $("#slider-1").fadeOut(400);
+                $("#slider-2").delay(400).fadeIn(400);
+                $("#sButton1").removeClass("ring-white");
+                $("#sButton2").addClass("ring-white");
+
+                reinitLoop(4000);
+                cont=1
+            }
+
+            $(window).ready(function(){
+                $("#slider-2").hide();
+                $("#sButton1").addClass("ring-white");
+
+                loopSlider();
+            });
+        </script>
+
+        <!-- Custom script file -->
+        <script src="js/main.js"></script>
+    {% endblock %}
+    {% endblock %}
+
+{% endblock %}

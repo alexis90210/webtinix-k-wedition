@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} scans {% endblock%}
+{% block stylesheets %}
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="css/tailwind.css">
+{% endblock %}
+{% block body %}
+{% block header %}{% endblock %}
+<div class="w-full min-h-screen py-6 absolute flex flex-col items-center justify-center bg-black bg-opacity-70">
+        <h2 class="text-white font-medium text-xl flex space-x-4">
+            <p>{{ idScan }}/{{ totalScan }}</p>
+            <a href="/like/{{ idManga }}/{{ idChapitre }}" class="kw-bg-gray-trans py-1 px-2 rounded-md flex items-center text-sm">
+                {{ totalLike }} &nbsp;
+                <svg class="text-red-600 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg>
+            </a>
+        </h2>
+        <progress class="max-w-md pt-2 w-11/12  mt-4" max="100" value="{{ progress }}"></progress>
+        <div x-data="{ show: false }" class="flex justify-between w-full items-center relative">
+            <a href="/mangas/{{ idManga }}-{{ mangaTitre }}-{{ idChapitre }}-scans-{% if scanLeft == 0 %}{{ 1 }}{% else %}{{ scanLeft }}{% endif %}">
+                <button id="btn-1" :class="{ 'hidden': show }" onclick="" class="focus:outline-none absolute left-0">
+                    <svg class="text-white w-20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.29,12l3.54-3.54a1,1,0,0,0,0-1.41,1,1,0,0,0-1.42,0L9.17,11.29a1,1,0,0,0,0,1.42L13.41,17a1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41Z"/></svg>
+                </button>
+            </a>
+            <div @click="show = !show" class="w-full max-w-5xl p-1 md:p-4 shadow-xl rounded-xl mx-auto">
+                <img src="../uploads/{{ scan }}" alt="" class="h-screen  md:max-w-5xl shadow-xl p-1 md:p-2 mx-auto rounded-md object-contain">
+            </div>
+            {% if scanRight <= totalScan %}
+            <a href="/mangas/{{ idManga }}-{{ mangaTitre }}-{{ idChapitre }}-scans-{% if scanRight > totalScan %}{{ totalScan }}{% else %}{{ scanRight }}{% endif %}">
+                <button id="btn-2" :class="{ 'hidden': show }" onclick="" class="focus:outline-none absolute right-0">
+                    <svg class="text-white w-20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.83,11.29,10.59,7.05a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41L12.71,12,9.17,15.54a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29l4.24-4.24A1,1,0,0,0,14.83,11.29Z"/></svg>
+                </button>
+            </a>
+                {% else %}
+                    <a href="/commentaire/{{ idChapitre }}">
+                        <button id="btn-2" :class="{ 'hidden': show }" onclick="" class="focus:outline-none absolute right-0">
+                            <svg class="text-white w-20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.83,11.29,10.59,7.05a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41L12.71,12,9.17,15.54a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29l4.24-4.24A1,1,0,0,0,14.83,11.29Z"/></svg>
+                        </button>
+                    </a>
+            {% endif %}
+        </div>
+    </div>
+
+
+{%  endblock %}
+
+{%  block footer %}
+    {% block javascript %}
+    {% block javascripts %}
+
+        <!-- Scripts -->
+
+        <!-- Alpine.js -->
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+            <script>
+                $(document).ready(function() {
+                    $(document).click(function() {
+                      $('#btn-1').toggleClass('hidden');
+                      $('#btn-2').toggleClass('hidden');
+                    });
+                  });
+            </script>
+        <script>
+            var cont=0;
+            function loopSlider(){
+                var xx = setInterval(function(){
+                    switch(cont)
+                    {
+                        case 0:{
+                            $("#slider-1").fadeOut(400);
+                            $("#slider-2").delay(400).fadeIn(400);
+
+                            $("#sButton1").removeClass("ring-white");
+                            $("#sButton2").addClass("ring-white");
+                            cont=1;
+
+                            break;
+                        }
+                        case 1:
+                        {
+
+                            $("#slider-2").fadeOut(400);
+                            $("#slider-1").delay(400).fadeIn(400);
+                            $("#sButton2").removeClass("ring-white");
+                            $("#sButton1").addClass("ring-white");
+
+                            cont=0;
+
+                            break;
+                        }
+                    }},5000);
+            }
+
+            function reinitLoop(time){
+                clearInterval(xx);
+                setTimeout(loopSlider(),time);
+            }
+
+            function sliderButton1(){
+                $("#slider-2").fadeOut(400);
+                $("#slider-1").delay(400).fadeIn(400);
+                $("#sButton2").removeClass("ring-white");
+                $("#sButton1").addClass("ring-white");
+
+                reinitLoop(4000);
+                cont=0
+            }
+
+            function sliderButton2(){
+                $("#slider-1").fadeOut(400);
+                $("#slider-2").delay(400).fadeIn(400);
+                $("#sButton1").removeClass("ring-white");
+                $("#sButton2").addClass("ring-white");
+
+                reinitLoop(4000);
+                cont=1
+            }
+
+            $(window).ready(function(){
+                $("#slider-2").hide();
+                $("#sButton1").addClass("ring-white");
+
+                loopSlider();
+            });
+        </script>
+
+        <!-- Custom script file -->
+        <script src="js/main.js"></script>
+    {% endblock %}
+    {% endblock %}
+
+{% endblock %}
+

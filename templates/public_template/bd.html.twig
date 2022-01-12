@@ -1,0 +1,210 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Mangas {% endblock%}
+{% block body %}
+
+    <main class="w-full pb-5 pt-28 md:pt-32" style="background: rgba(0, 0, 0, .5);">
+
+        <!-- Main section -->
+        <section class="px-2 md:px-6 max-w-6xl mx-auto relative flex flex-wrap">            
+            <div class="w-full p-1 flex flex-col space-y-3">
+
+                <!-- Head main -->
+                <div class="pb-3 flex flex-col space-y-4 items-center">
+                    <h2 class="font-medium text-lg md:text-4xl text-white uppercase">Notre liste de bandes dessinées</h2>
+                   {# <!-- Head main -->
+                    {{ form_start(form) }}
+                    <div class="pb-3 flex flex-col space-y-4 items-center">
+                    <span class="relative w-full bg-black bg-opacity-50 rounded-full text-gray-400 text-lg flex items-center">
+                        {{ form_widget(form.search,{ 'attr':{'class':'text-white w-full bg-transparent px-16 py-4 border border-black rounded-full
+                            placeholder-gray-400 focus:outline-none focus:ring ring-white', 'placeholder':'One piece Man'} }) }}
+                        <svg class="w-6 h-6 absolute left-8 top-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </span>
+                    </div>
+                    {{ form_end(form) }}#}
+
+                </div>
+                {% if result|length < 1 %}
+                {% if mangas|length > 0 %}
+                <div class="w-full h-full kw-bg-gray-trans rounded-xl p-4 flex flex-wrap justify-center">
+                    {% for manga in mangas %}
+                    <div class="w-full py-2 md:py-0 md:w-60 m-2 bg-black bg-opacity-75 rounded-xl flex flex-col justify-between items-center border-2 border-transparent
+                        hover:border-yellow-800 transform hover:scale-105 duration-500 shadow-xl">
+                        <img src="./uploads/{{ manga.manga_cover }}" alt="" class="w-full h-36 rounded-t-lg object-cover">
+                        <div class="w-full rounded-b-xl flex flex-col justify-between px-2 py-3 text-white">
+                            <a href="/mangas/{{ manga.id_manga }}-chapitres" class="text-lg text-center font-medium hover:text-yellow-800 transition-all duration-300">
+                               {{ manga.titre_manga }}
+                            </a>
+                           <p class="text-center text-sm mt-1">Dernier chapitre: {{ manga.dernier_chapitre }} en cours</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- Pagination -->
+                    {#<div class="container mx-auto px-4 py-2 pt-4">
+                        <nav class="flex flex-row flex-nowrap justify-between md:justify-center items-center font-medium" aria-label="Pagination">
+                            <a class="flex w-10 h-10 mr-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Previous Page">
+                                <span class="sr-only">Previous Page</span>
+                                <svg class="block w-4 h-4 fill-current" viewBox="0 0 256 512" aria-hidden="true" role="presentation">
+                                    <path d="M238.475 475.535l7.071-7.07c4.686-4.686 4.686-12.284 0-16.971L50.053 256 245.546 60.506c4.686-4.686 4.686-12.284 0-16.971l-7.071-7.07c-4.686-4.686-12.284-4.686-16.97 0L10.454 247.515c-4.686 4.686-4.686 12.284 0 16.971l211.051 211.05c4.686 4.686 12.284 4.686 16.97-.001z"></path>
+                                </svg>
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 1">
+                                1
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 2">
+                                2
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-black bg-black text-white pointer-events-none" href="#" aria-current="page" title="Page 3">
+                                3
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 4">
+                                ...
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 5">
+                                5
+                            </a>
+                            <a class="flex w-10 h-10 ml-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Next Page">
+                                <span class="sr-only">Next Page</span>
+                                <svg class="block w-4 h-4 fill-current" viewBox="0 0 256 512" aria-hidden="true" role="presentation">
+                                    <path d="M17.525 36.465l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L205.947 256 10.454 451.494c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l211.051-211.05c4.686-4.686 4.686-12.284 0-16.971L34.495 36.465c-4.686-4.687-12.284-4.687-16.97 0z"></path>
+                                </svg>
+                            </a>
+                        </nav>
+                    </div>#}
+                </div>
+                {% endif %}
+                    {% else %}
+                {% if result|length > 0 %}
+                <h2 class="text-white text-xl pb-2">Résultats de recherche :</h2>
+
+                <div class="w-full h-full kw-bg-gray-trans rounded-xl p-4 flex flex-wrap justify-center">
+                    {% for r in result %}
+                    <div class="w-full py-2 md:py-0 md:w-60 m-2 bg-black bg-opacity-75 rounded-xl flex flex-col justify-between items-center border-2 border-transparent
+                        hover:border-yellow-800 transform hover:scale-105 duration-500 shadow-xl">
+                        <img src="./uploads/{{ r.manga_cover }}" alt="" class="w-full h-36 rounded-t-lg object-cover">
+                        <div class="w-full rounded-b-xl flex flex-col justify-between px-2 py-3 text-white">
+                            <a href="#" class="text-lg text-center font-medium hover:text-yellow-800 transition-all duration-300">
+                                {{ r.titre_manga }}
+                            </a>
+                            <p class="text-center text-sm mt-1">Dernier chapitre: {{ r.dernier_chapitre }} - {{ r.titre_chapitre }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- Pagination -->
+                    <div class="container mx-auto px-4 py-2 pt-4">
+                        <nav class="flex flex-row flex-nowrap justify-between md:justify-center items-center font-medium" aria-label="Pagination">
+                            <a class="flex w-10 h-10 mr-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Previous Page">
+                                <span class="sr-only">Previous Page</span>
+                                <svg class="block w-4 h-4 fill-current" viewBox="0 0 256 512" aria-hidden="true" role="presentation">
+                                    <path d="M238.475 475.535l7.071-7.07c4.686-4.686 4.686-12.284 0-16.971L50.053 256 245.546 60.506c4.686-4.686 4.686-12.284 0-16.971l-7.071-7.07c-4.686-4.686-12.284-4.686-16.97 0L10.454 247.515c-4.686 4.686-4.686 12.284 0 16.971l211.051 211.05c4.686 4.686 12.284 4.686 16.97-.001z"></path>
+                                </svg>
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 1">
+                                1
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 2">
+                                2
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-black bg-black text-white pointer-events-none" href="#" aria-current="page" title="Page 3">
+                                3
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 4">
+                                ...
+                            </a>
+                            <a class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Page 5">
+                                5
+                            </a>
+                            <a class="flex w-10 h-10 ml-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Next Page">
+                                <span class="sr-only">Next Page</span>
+                                <svg class="block w-4 h-4 fill-current" viewBox="0 0 256 512" aria-hidden="true" role="presentation">
+                                    <path d="M17.525 36.465l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L205.947 256 10.454 451.494c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l211.051-211.05c4.686-4.686 4.686-12.284 0-16.971L34.495 36.465c-4.686-4.687-12.284-4.687-16.97 0z"></path>
+                                </svg>
+                            </a>
+                        </nav>
+                    </div>
+
+                    {% endif %}
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    {%  endblock %}
+
+    {% block javascript %}
+
+    <!-- Scripts -->
+
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        var cont=0;
+        function loopSlider(){
+            var xx = setInterval(function(){
+                switch(cont)
+                {
+                    case 0:{
+                        $("#slider-1").fadeOut(400);
+                        $("#slider-2").delay(400).fadeIn(400);
+
+                        $("#sButton1").removeClass("ring-white");
+                        $("#sButton2").addClass("ring-white");
+                        cont=1;
+
+                        break;
+                    }
+                    case 1:
+                    {
+
+                        $("#slider-2").fadeOut(400);
+                        $("#slider-1").delay(400).fadeIn(400);
+                        $("#sButton2").removeClass("ring-white");
+                        $("#sButton1").addClass("ring-white");
+
+                        cont=0;
+
+                        break;
+                    }
+                }},5000);
+        }
+
+        function reinitLoop(time){
+            clearInterval(xx);
+            setTimeout(loopSlider(),time);
+        }
+
+        function sliderButton1(){
+            $("#slider-2").fadeOut(400);
+            $("#slider-1").delay(400).fadeIn(400);
+            $("#sButton2").removeClass("ring-white");
+            $("#sButton1").addClass("ring-white");
+
+            reinitLoop(4000);
+            cont=0
+        }
+
+        function sliderButton2(){
+            $("#slider-1").fadeOut(400);
+            $("#slider-2").delay(400).fadeIn(400);
+            $("#sButton1").removeClass("ring-white");
+            $("#sButton2").addClass("ring-white");
+
+            reinitLoop(4000);
+            cont=1
+        }
+
+        $(window).ready(function(){
+            $("#slider-2").hide();
+            $("#sButton1").addClass("ring-white");
+
+            loopSlider();
+        });
+    </script>
+{% endblock %}
